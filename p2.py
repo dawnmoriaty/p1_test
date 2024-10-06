@@ -7,21 +7,21 @@ class SegmentTree:
 
     def create(self, data, node, start, end):
         if start == end:
-            self.tree[node] = self.calculate_b(data[start])
+            self.tree[node] = self.calculate_b(data[start],start)
         else:
             mid = (start + end) // 2
             self.create(data, 2 * node + 1, start, mid)
             self.create(data, 2 * node + 2, mid + 1, end)
             self.tree[node] = self.tree[2 * node + 1] + self.tree[2 * node + 2]
 # cal b[x]
-    def calculate_b(self, value):
-        if value % self.k == 0:
+    def calculate_b(self, value,idx):
+        if idx % self.k == 0 or str(self.k) in str(idx):
             return 2 * value
         return value
 #update idx
     def update(self, idx, value, node, start, end):
         if start == end:
-            self.tree[node] = self.calculate_b(value)
+            self.tree[node] = self.calculate_b(value,idx)
         else:
             mid = (start + end) // 2
             if start <= idx <= mid:
